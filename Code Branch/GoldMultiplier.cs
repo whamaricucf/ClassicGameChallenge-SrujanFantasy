@@ -32,6 +32,7 @@ public class GoldMultiplier : MonoBehaviour
             deathGold = currentGold;
             currentGold = currentGold / 2;
             hasDied = false;
+            Debug.Log("Current Gold Halved = " + currentGold);
         }
     }
 
@@ -41,6 +42,7 @@ public class GoldMultiplier : MonoBehaviour
         {
             goldMultiplier = 1.3f;
         }
+        Debug.Log("Dropped Gold = " + droppedGold * goldMultiplier);
         currentGold = (int)(currentGold + droppedGold * goldMultiplier);
         goldMultiplier = 1f;
     }
