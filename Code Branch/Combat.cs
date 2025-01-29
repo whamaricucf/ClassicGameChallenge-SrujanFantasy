@@ -8,19 +8,19 @@ public class Combat : MonoBehaviour
     private int atkDmg;
     private int damageRating;
 
-    private int str;
-    private int mag;
+    public int str;
+    public int mag;
     private int def;
     private int HP;
-    private int agi;
-    private int lvl;
+    public int agi;
+    public int lvl;
 
     private int targetStr;
-    private int targetMag;
-    private int targetDef;
+    public int targetMag;
+    public int targetDef;
     private int targetHP;
-    private int targetAgi;
-    private int targetLvl;
+    public int targetAgi;
+    public int targetLvl;
 
     private int turn;
 
@@ -36,19 +36,23 @@ public class Combat : MonoBehaviour
     void Start()
     {
         //Debug.Log("");
-        DamageCalculator(10, 0, 8, 1, 4, 0, 5, 5, 0);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Debug.Log("Space was pressed");
+            Debug.Log("--------New Damage Calculation!--------");
+            DamageCalculator(str, mag, agi, lvl, 4, targetMag, targetDef, targetAgi, targetLvl);
+        }
     }
 
     int DamageCalculator(int strValue, int magValue, int agiValue, int lvlValue, int targetValue, int targetMagValue, int targetDefValue, int targetAgiValue, int targetLvlValue)
     {
         int hitCritChance = rnd.Next(0, 200) + 1;
-        hitCritChance = 1;
         if (!magAtk)
         {
             DamageRating();
@@ -64,7 +68,7 @@ public class Combat : MonoBehaviour
             if (hitCritChance != 200 && hitCritChance <= agiValue * 2 && hitCritChance <= 100 - targetAgiValue / 2 || hitCritChance == 1)
             {
                 Debug.Log("Crit!");
-                int damage = rnd.Next(damageRating, (damageRating + 1) * 2);
+                int damage = rnd.Next(damageRating, (damageRating) * 2);
                 Debug.Log("Pre-Crit Damage: " + damage);
                 atkDmg = damage * 2;
             }
@@ -92,16 +96,17 @@ public class Combat : MonoBehaviour
             }
             else
             {
+                Debug.Log("Damage reduced by half due to: Back Row");
                 damageRating = ((strValue / 4) * ((lvlValue + 1) / 2));
             }
-            Debug.Log("Damage Rating: " + damageRating);
+            Debug.Log("Attacker Damage Rating: " + damageRating);
         }
 
         void PhysicalAttack()
         {
             int damage = rnd.Next(damageRating, damageRating * 2);
             atkDmg = damage - targetDefValue;
-            Debug.Log("Raw Damage: " + damage);
+            Debug.Log("Raw Damage: " + damage + " Reduced by: " + targetDefValue + " Target Defense!");
         }
 
         if (atkDmg < 0)
@@ -119,7 +124,7 @@ public class Combat : MonoBehaviour
             atkDmg = 9999;
         }
 
-        Debug.Log("Damage: " + atkDmg);
+        Debug.Log("Final Damage: " + atkDmg);
         return atkDmg;
     }
 }
