@@ -109,7 +109,7 @@ public class Combat : MonoBehaviour
             Debug.Log("Raw Damage: " + damage + " Reduced by: " + targetDefValue + " Target Defense!");
         }
 
-        if (atkDmg < 0)
+        if (atkDmg < 1)
         {
             if (targetValue <= 3)
             {
