@@ -107,19 +107,20 @@ public class Combat : MonoBehaviour
             int damage = rnd.Next(damageRating, damageRating * 2);
             atkDmg = damage - targetDefValue;
             Debug.Log("Raw Damage: " + damage + " Reduced by: " + targetDefValue + " Target Defense!");
-        }
-
-        if (atkDmg < 1)
-        {
-            if (targetValue <= 3)
+            if (atkDmg < 1)
             {
-                atkDmg = 0;
-            } else if (targetValue > 3)
-            {
-                atkDmg = 1;
+                if (targetValue <= 3)
+                {
+                    atkDmg = 0;
+                }
+                else if (targetValue > 3)
+                {
+                    atkDmg = 1;
+                }
             }
         }
-        else if (atkDmg > 9999)
+
+        if (atkDmg > 9999)
         {
             atkDmg = 9999;
         }
